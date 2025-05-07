@@ -7,8 +7,8 @@ export class AppwriteAuth {
 
     constructor(){
         this.client
-        .setEndpoint(config.appwriteUrl)
-        .setProject(config.appwriteProjectId);
+        .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) 
+        .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
         this.account = new Account(this.client);
 
@@ -25,17 +25,17 @@ export class AppwriteAuth {
 
         }
         catch(error){
-            console.log("Error creating account", error);
+            // console.log("Error creating account", error);
             throw error;
         }
 }
 async login({email, password}){
     try{
-        return await this.account.createEmailSession(email,password);
+        return await this.account.createSession(email,password);
         
     }
     catch(error){
-        console.log("Error logging in", error);
+        // console.log("Error logging in", error);
         throw error;
 
     }
@@ -44,28 +44,28 @@ async login({email, password}){
 
 async getCurrentUser(){
     try{
-        return
+       return await this.account.get();
 
     }
     catch(error){
-        console.log("Error getting current user", error);
+        // console.log("Error getting current user", error);
         throw error;
     }
 return null;
 }
 async logout(){
     try{
-        return await this.account.deleteSession("current");
+         await this.account.deleteSessions();
     }
     catch(error){
         throw error;
-        console.log("Error logging out", error);        
+        // console.log("Error logging out", error);        
     }
     }
 } 
 
 
 
-const authService =new AppwriteAuth();
+const authService = new AppwriteAuth();
 
 export default authService;

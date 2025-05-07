@@ -8,8 +8,8 @@ export class DbService{
 
     constructor(){
         this.client
-        .setEndpoint(config.appwriteUrl)
-        .setProject(config.appwriteProjectId);
+        .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
+        .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
         this.databases =new Databases(this.client);
         this.storage=new Storage(this.client);
@@ -21,10 +21,11 @@ export class DbService{
         return await this.databases.createDocument(
             config.appwriteDatabaseId,
             config.appwriteCollectionId,
+            slug,
             {
                 title,
                 content,
-                slug,
+                
                 coverImage,
                 status,
                 userId,
@@ -37,7 +38,7 @@ export class DbService{
         throw error;
     }}
 
-    async updatePost(slug,{postId,title,content,coverImage,status,userId})
+    async updatePost(slug,{title,content,coverImage,status})
     {
         try{
             return await this.databases.updateDocument(
@@ -49,7 +50,7 @@ export class DbService{
                 }
             )}
         catch(error){
-            console.log("Error updating post", error);
+            // console.log("Error updating post", error);
             throw error;
         } }
 
@@ -63,8 +64,9 @@ export class DbService{
                 return true;
             }
             catch(error){
-                console.log("Error deleting post", error);
-                throw error;
+              
+                return false;
+                // console.log("Error deleting post", error);
             }
         }
 
@@ -77,8 +79,9 @@ export class DbService{
                 )
             }
             catch(error){
-                console.log("Error getting post", error);
-                throw error;
+                // console.log("Error getting post", error);
+                // throw error;
+                return false;
             }
         }
             
@@ -91,8 +94,9 @@ export class DbService{
                 )
             }
             catch(error){
-                console.log("Error getting posts", error);
-                throw error;
+                // console.log("Error getting posts", error);
+                // throw error;
+                return false;
             }
 
         }
@@ -118,10 +122,11 @@ export class DbService{
                     config.appwriteBucketId,
                     fileId
                 )
+                return true;
             }
             catch(error){
                 console.log("Error deleting file", error);
-                throw error;
+                return false;
             }
         }
 
