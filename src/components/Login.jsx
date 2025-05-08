@@ -8,7 +8,7 @@ import service from '../appwrite/conf'
 import { useForm } from 'react-hook-form'
 
 
- function Login() {
+ export default function Login() {
     const navigate=useNavigate()
     const dispatch=useDispatch()
     const {register,handleSubmit}=useForm()
@@ -44,7 +44,7 @@ import { useForm } from 'react-hook-form'
     <h1 className='text-2xl font-bold text-center mb-4'>Login</h1>
     <p className='text-sm text-center mb-4'>
         Don't have an account?
-        <Link to='/register'
+        <Link to='/signup'
          className='text-blue-500 hover:underline'>Register</Link>
         </p>
         {error && <p className='text-red-500 text-sm mb-4'>{error}</p>}
@@ -83,7 +83,7 @@ import { useForm } from 'react-hook-form'
 
 <Button
 type='submit'
->Sign In</Button>
+>Login</Button>
                 </div>
 
         </form>
@@ -94,5 +94,6 @@ type='submit'
   )
 }
 
-export default Login
-export {Login}
+
+const LoginContainer = Login
+export {LoginContainer}

@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
 const store =configureStore({
     reducer:{
-        auth:authSlice,
+        auth: authSlice,
         // auth: (state = { status: false, userData: null }, action) => {
         //     switch (action.type) {
         //         case 'auth/login':
